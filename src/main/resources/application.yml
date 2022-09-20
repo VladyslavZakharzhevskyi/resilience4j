@@ -1,0 +1,12 @@
+reselience4j:
+  bulkhead:
+    thread-pool:
+      core-thread-pool-size: 10
+      queue-capacity: 100
+    semaphore:
+      max-concurrent-calls: 10
+      max-wait-duration: 10000
+    properties:
+      thread-sleep-time: 5000
+server:
+  port: 11210
