@@ -8,7 +8,7 @@ import java.util.Map;
 
 @Data
 @Configuration
-@ConfigurationProperties(prefix = "reselience4j.bulkhead")
+@ConfigurationProperties("reselience4j.bulkhead")
 public class BulkHeadGlobalProperties {
 
     private ThreadPoolProperties threadPool;

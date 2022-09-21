@@ -28,6 +28,7 @@ public class BulkheadCConfig {
         final Integer queueCapacity = properties.getInitQueueCapacity();
 
         ThreadPoolBulkheadConfig config = ThreadPoolBulkheadConfig.custom()
+                .maxThreadPoolSize(25)
                 .coreThreadPoolSize(coreThreadPoolSize)
                 .queueCapacity(queueCapacity)
                 .build();

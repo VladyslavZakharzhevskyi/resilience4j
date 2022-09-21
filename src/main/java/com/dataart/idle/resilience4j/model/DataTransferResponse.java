@@ -9,6 +9,8 @@ public class DataTransferResponse {
     private byte[] content;
     private Type type;
 
+    public DataTransferResponse() {}
+
     public DataTransferResponse(String supplier, byte[] content, Type type) {
         this.supplier = supplier;
         this.content = content;

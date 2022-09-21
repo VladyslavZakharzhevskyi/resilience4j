@@ -1,12 +1,20 @@
 reselience4j:
   bulkhead:
     thread-pool:
-      core-thread-pool-size: 10
+      core-thread-pool-size: 25
       queue-capacity: 100
     semaphore:
       max-concurrent-calls: 10
       max-wait-duration: 10000
     properties:
       thread-sleep-time: 5000
+  rate-limiter:
+    limit-refresh-period: 3000    # allow 5 calls during 3 second
+    limit-for-period: 5           # allow only 5 calls
+    timeout-duration: 12000       # timeout for thread
+  time-limiter:
+    timeout-duration: 2000
+    cancel-running-future: true
+
 server:
   port: 11210

@@ -18,11 +18,17 @@ repositories {
     mavenCentral()
 }
 
+ext {
+    set("resilience4jVersion", "1.7.1")
+}
+
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
     implementation 'org.springframework.boot:spring-boot-starter-web'
-    implementation "io.github.resilience4j:resilience4j-bulkhead:1.7.1"
+    implementation "io.github.resilience4j:resilience4j-bulkhead:${resilience4jVersion}"
+    implementation "io.github.resilience4j:resilience4j-ratelimiter:${resilience4jVersion}"
+    implementation "io.github.resilience4j:resilience4j-timelimiter:${resilience4jVersion}"
     compileOnly 'org.projectlombok:lombok'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
     annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
