@@ -29,4 +29,11 @@ public class SomeServiceImpl implements SomeService {
         }
         return "Successfully executed method 2.";
     }
+
+    @Override
+    public String method3() {
+        LOG.info("Execute retry method");
+        return method1();
+    }
+
 }

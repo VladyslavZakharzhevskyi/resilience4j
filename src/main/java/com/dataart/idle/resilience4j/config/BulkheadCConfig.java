@@ -25,10 +25,11 @@ public class BulkheadCConfig {
     @Bean
     public ThreadPoolBulkhead initThreadPoolBulkhead() {
         final Integer coreThreadPoolSize = properties.getInitCoreThreadPoolSize();
+        int maxThreadPoolSize = coreThreadPoolSize + 2;
         final Integer queueCapacity = properties.getInitQueueCapacity();
 
         ThreadPoolBulkheadConfig config = ThreadPoolBulkheadConfig.custom()
-                .maxThreadPoolSize(25)
+                .maxThreadPoolSize(maxThreadPoolSize)
                 .coreThreadPoolSize(coreThreadPoolSize)
                 .queueCapacity(queueCapacity)
                 .build();

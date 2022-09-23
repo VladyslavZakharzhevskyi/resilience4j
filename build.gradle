@@ -29,6 +29,7 @@ dependencies {
     implementation "io.github.resilience4j:resilience4j-bulkhead:${resilience4jVersion}"
     implementation "io.github.resilience4j:resilience4j-ratelimiter:${resilience4jVersion}"
     implementation "io.github.resilience4j:resilience4j-timelimiter:${resilience4jVersion}"
+    implementation "io.github.resilience4j:resilience4j-retry:${resilience4jVersion}"
     compileOnly 'org.projectlombok:lombok'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
     annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'

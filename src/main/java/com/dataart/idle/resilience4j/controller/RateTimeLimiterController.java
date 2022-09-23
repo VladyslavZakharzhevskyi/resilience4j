@@ -2,7 +2,10 @@ package com.dataart.idle.resilience4j.controller;
 
 import com.dataart.idle.resilience4j.service.SomeService;
 import io.github.resilience4j.ratelimiter.RateLimiter;
+import io.github.resilience4j.retry.Retry;
 import io.github.resilience4j.timelimiter.TimeLimiter;
+import io.vavr.CheckedFunction0;
+import io.vavr.control.Try;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,8 +17,8 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.concurrent.CompletableFuture;
 
 @RestController
-public class LimiterController {
-    private static final Logger LOG = LogManager.getLogger(LimiterController.class);
+public class RateTimeLimiterController {
+    private static final Logger LOG = LogManager.getLogger(RateTimeLimiterController.class);
 
     @Autowired
     private SomeService someService;
@@ -23,26 +26,23 @@ public class LimiterController {
     private RateLimiter rateLimiter;
     @Autowired
     private TimeLimiter timeLimiter;
+    @Autowired
+    private Retry retry;
+
 
     @RequestMapping(method = RequestMethod.GET, path = "/rateLimiter")
     public ResponseEntity<String> callServiceWithRateLimiter() {
-        String response = null;
-        try {
-            response = rateLimiter.executeCheckedSupplier(() -> someService.method1());
-        } catch (Throwable e) {
-            LOG.error("Exception occurred: {}", e.getMessage());
-        }
+        CheckedFunction0<String> rateLimiterDataRetrieval = () -> rateLimiter.executeCheckedSupplier(() -> someService.method1());
+        CheckedFunction0<String> retryDataRetrieval = () -> retry.executeCheckedSupplier(() -> someService.method3());
+        String response = Try.of(rateLimiterDataRetrieval)
+                .getOrElseTry(retryDataRetrieval);
+
         return ResponseEntity.ok(response);
     }
 
     @RequestMapping(method = RequestMethod.GET, path = "/timeLimiter")
-    public ResponseEntity<String> callServiceWithTimeLimiter() {
-        String response = null;
-        try {
-            response = timeLimiter.executeFutureSupplier(() -> CompletableFuture.supplyAsync(() -> someService.method2()));
-        } catch (Exception e) {
-            LOG.error("Exception occurred: {}", e.getMessage());
-        }
+    public ResponseEntity<String> callServiceWithTimeLimiter() throws Exception {
+        String response = timeLimiter.executeFutureSupplier(() -> CompletableFuture.supplyAsync(() -> someService.method2()));
         return ResponseEntity.ok(response);
     }
 

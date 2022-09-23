@@ -23,6 +23,7 @@ public class BulkHeadController {
     @Autowired
     private Bulkhead semaphoreBulkhead;
 
+
     @RequestMapping(method = RequestMethod.POST, path = "/bulkhead")
     public ResponseEntity<String> runBulkhead(@RequestParam(name = "type") String type,
                                               @RequestParam(name = "threadCount") Integer threadCount,

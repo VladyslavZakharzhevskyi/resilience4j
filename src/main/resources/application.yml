@@ -9,12 +9,15 @@ reselience4j:
     properties:
       thread-sleep-time: 5000
   rate-limiter:
-    limit-refresh-period: 3000    # allow 5 calls during 3 second
+    limit-refresh-period: 500       # allow 5 calls during 0.5 second
     limit-for-period: 5           # allow only 5 calls
-    timeout-duration: 12000       # timeout for thread
+    timeout-duration: 1000          # timeout for thread
   time-limiter:
     timeout-duration: 2000
     cancel-running-future: true
+  retry:
+    max-attempts: 2
+    wait-duration: 1000
 
 server:
   port: 11210
